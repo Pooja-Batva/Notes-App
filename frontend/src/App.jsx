@@ -1,10 +1,12 @@
 import Navbar from './components/Navbar'
 import {Routes, Route} from 'react-router-dom'
 import {lazy, Suspense} from 'react'
+import ProtectedRoute from './components/ProtectedRoute'
 const Dashboard = lazy(() => import('./pages/Dashboard'))
 const Login = lazy(() => import('./pages/Login'))
 const Signup = lazy(() => import('./pages/Signup'))
 const NoMatch = lazy(() => import('./components/NoMatch'))
+
 
 function App() {
   return (
@@ -12,10 +14,10 @@ function App() {
     <Navbar />
       <Suspense fallback={<div>Loading...</div>} >
         <Routes>
-          <Route path='/' element={<Dashboard />} />
+          <Route path='/' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
-          <Route path='*' element={<NoMatch />} />
+          <Route path='*' element={<ProtectedRoute><NoMatch /></ProtectedRoute>} />
         </Routes>
       </Suspense>
     </>

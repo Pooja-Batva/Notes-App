@@ -65,6 +65,7 @@ const registerUser = asyncHandler(async(req, res) => {
 
 const loginUser = asyncHandler(async(req, res) => {
     // fetch all field
+    console.log(req.body);
     const {email, password} = req.body;
 
     // check for empty

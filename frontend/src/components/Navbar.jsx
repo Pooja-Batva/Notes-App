@@ -1,17 +1,16 @@
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
 
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const { isLoggedIn, logout } = useAuth();
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        const token = Cookies.get("token");
-        if (token) {
-            setIsAuthenticated(true);
-        }
-    }, []);
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
+    };
 
   return (
     <nav className='bg-gray-900 text-white px-6 py-3 flex justify-between items-center'>
@@ -23,16 +22,13 @@ function Navbar() {
         {/* right side */}
         <div className='space-x-4'>
             {
-                isAuthenticated ? (
+                isLoggedIn ? (
                     <>
-                        <Link to='/notes' className="hover:text-yellow-300">
+                        <Link to='/add-note' className="hover:text-yellow-300">
                             My Notes
                         </Link>
                         <button 
-                            onClick={() => {
-                                Cookies.remove("token");
-                                setIsAuthenticated(false);
-                            }}
+                            onClick={handleLogout}
                             className='bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded'
                         >
                             Logout

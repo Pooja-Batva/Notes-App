@@ -5,7 +5,7 @@ import {ApiError, ApiResponse, asyncHandler} from "../utils/index.js"
 const addNote = asyncHandler(async(req, res) => {
     // fetch user input
     const {title, description} = req.body;
-    // console.log(title, description);
+    console.log(title, description);
 
     if(!title){
         throw new ApiError(400, "Title is required.");
